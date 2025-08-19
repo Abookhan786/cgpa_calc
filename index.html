@@ -190,7 +190,7 @@ form.addEventListener('submit', async function(e) {
     const username = form.username.value;
     const password = form.password.value;
     try {
-        const res = await fetch('http://127.0.0.1:5000/login', {
+    const res = await fetch('https://cgpa-calc-ii2q.onrender.com/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
@@ -227,7 +227,7 @@ registerForm.onsubmit = async function(e) {
     const username = document.getElementById('regUsername').value;
     const password = document.getElementById('regPassword').value;
     try {
-        const res = await fetch('http://127.0.0.1:5000/register', {
+    const res = await fetch('https://cgpa-calc-ii2q.onrender.com/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
@@ -261,7 +261,7 @@ resetForm.onsubmit = async function(e) {
     const username = document.getElementById('resetUsername').value;
     const new_password = document.getElementById('resetPassword').value;
     try {
-        const res = await fetch('http://127.0.0.1:5000/reset-password', {
+    const res = await fetch('https://cgpa-calc-ii2q.onrender.com/reset-password', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, new_password })
@@ -298,25 +298,7 @@ form.addEventListener('submit', async function(e) {
     const username = form.username.value;
     const password = form.password.value;
     try {
-        const res = await fetch('http://127.0.0.1:5000/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-        });
-        const data = await res.json();
-        if (res.ok && data.success) {
-            msg.textContent = data.message;
-            msg.style.color = '#00ff99';
-            // Optionally redirect or show dashboard
-        } else {
-            msg.textContent = data.message || 'Login failed.';
-            msg.style.color = '#ff3b3b';
-        }
-    } catch (err) {
-        msg.textContent = 'Server error. Please try again.';
-        msg.style.color = '#ff3b3b';
-    }
-});
+// ...existing code...
 </script>
     </div>
 </body>
