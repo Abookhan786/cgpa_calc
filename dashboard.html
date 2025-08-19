@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA Target Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+            font-family: 'Orbitron', Arial, sans-serif;
+            color: #fff;
+        }
+        .container {
+            background: rgba(30, 41, 59, 0.85);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(0,255,247,0.18);
+            padding: 40px 32px 28px 32px;
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        h2 {
+            color: #00fff7;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00fff7;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            border: 1.5px solid #00fff7;
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, #00fff7 0%, #007cf0 100%);
+            color: #181c20;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 0 12px #00fff7;
+            transition: background 0.2s, color 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #007cf0 0%, #00fff7 100%);
+            color: #fff;
+        }
+        #result {
+            margin-top: 18px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>CGPA Target Calculator</h2>
+        <form id="cgpaForm">
+            <label for="internal">Internal Marks (out of 40):</label>
+            <input type="number" id="internal" min="0" max="40" required>
+            <label for="targetCgpa">Target CGPA (e.g., 8.0):</label>
+            <input type="number" id="targetCgpa" min="0" max="10" step="0.01" required>
+            <label for="scheme">Select Scheme:</label>
+            <select id="scheme">
+                <option value="default">Default (40 Internal + 60 External, 10 CGPA)</option>
+                <!-- Add more schemes here if needed -->
+            </select>
+            <button type="submit">Calculate Required External Marks</button>
+        </form>
+        <div id="result"></div>
+    </div>
+    <script>
+        document.getElementById('cgpaForm').onsubmit = function(e) {
+            e.preventDefault();
+            const internal = parseFloat(document.getElementById('internal').value);
+            const targetCgpa = parseFloat(document.getElementById('targetCgpa').value);
+            const scheme = document.getElementById('scheme').value;
+            let result = '';
+            if (scheme === 'default') {
+                // 40 internal + 60 external, total 100, CGPA out of 10
+                const totalMarksNeeded = targetCgpa * 10;
+                const requiredExternal = totalMarksNeeded - internal;
+                if (requiredExternal > 60) {
+                    result = `Target CGPA not possible. Max external marks is 60.`;
+                } else if (requiredExternal < 0) {
+                    result = `You already have enough internal marks for the target CGPA!`;
+                } else {
+                    result = `You need <b>${requiredExternal.toFixed(2)}</b> marks out of 60 in external exam to achieve CGPA <b>${targetCgpa}</b>.`;
+                }
+            } else {
+                result = 'Scheme not supported yet.';
+            }
+            document.getElementById('result').innerHTML = result;
+        };
+    </script>
+</body>
+</html>

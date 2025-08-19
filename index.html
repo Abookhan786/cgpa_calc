@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Techy Login Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+            font-family: 'Orbitron', Arial, sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+        .glow {
+            color: #00fff7;
+            text-shadow: 0 0 8px #00fff7, 0 0 16px #00fff7, 0 0 32px #00fff7;
+            letter-spacing: 2px;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+        }
+        .login-container {
+            background: rgba(30, 41, 59, 0.85);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(0,255,247,0.18);
+            padding: 40px 32px 28px 32px;
+            max-width: 350px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+            color: #00fff7;
+            letter-spacing: 1px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            border: 1.5px solid #00fff7;
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border: 1.5px solid #00fff7;
+            box-shadow: 0 0 8px #00fff7;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, #00fff7 0%, #007cf0 100%);
+            color: #181c20;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 0 12px #00fff7;
+            transition: background 0.2s, color 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #007cf0 0%, #00fff7 100%);
+            color: #fff;
+        }
+        .links {
+            text-align: center;
+            margin-top: 18px;
+        }
+        .links a {
+            color: #00fff7;
+            text-decoration: none;
+            margin: 0 6px;
+            font-size: 0.98rem;
+            transition: color 0.2s;
+        }
+        .links a:hover {
+            color: #fff;
+            text-shadow: 0 0 8px #00fff7;
+        }
+        /* Animated background tech lines */
+        .lines {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .line {
+            position: absolute;
+            width: 2px;
+            height: 100vh;
+            background: linear-gradient(180deg, #00fff7 0%, transparent 100%);
+            opacity: 0.18;
+            animation: moveLine 6s linear infinite;
+        }
+        .line:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .line:nth-child(3) { left: 40%; animation-delay: 2s; }
+        .line:nth-child(4) { left: 60%; animation-delay: 3s; }
+        .line:nth-child(5) { left: 80%; animation-delay: 4s; }
+        .line:nth-child(6) { left: 90%; animation-delay: 5s; }
+        @keyframes moveLine {
+            0% { top: -100vh; }
+            100% { top: 100vh; }
+        }
+    </style>
+</head>
+<body>
+    <div class="lines">
+        <div class="line" style="left:10%"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+    <div class="login-container">
+        <div class="glow">Tech Login Portal</div>
+        <form id="loginForm" autocomplete="off">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required autocomplete="off">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required autocomplete="off">
+            <button type="submit">Login</button>
+            <div id="loginMsg" style="margin-top:12px;text-align:center;"></div>
+        </form>
+        <div class="links">
+            <a href="#" id="showRegister">Register</a>|
+            <a href="#" id="showReset">Forgot Password?</a>
+        </div>
+
+        <!-- Registration Modal -->
+        <div id="registerModal" style="display:none;position:fixed;z-index:10;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.6);align-items:center;justify-content:center;">
+            <div style="background:#222c38;padding:32px 24px;border-radius:12px;max-width:340px;width:90%;box-shadow:0 0 24px #00fff7;position:relative;">
+                <span id="closeRegister" style="position:absolute;top:10px;right:18px;cursor:pointer;font-size:1.3rem;color:#00fff7;">&times;</span>
+                <h2 style="color:#00fff7;text-align:center;margin-bottom:18px;">Register</h2>
+                <form id="registerForm">
+                    <label for="regUsername">Username</label>
+                    <input type="text" id="regUsername" required autocomplete="off">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" required autocomplete="off">
+                    <button type="submit">Register</button>
+                    <div id="registerMsg" style="margin-top:10px;text-align:center;"></div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Password Reset Modal -->
+        <div id="resetModal" style="display:none;position:fixed;z-index:10;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.6);align-items:center;justify-content:center;">
+            <div style="background:#222c38;padding:32px 24px;border-radius:12px;max-width:340px;width:90%;box-shadow:0 0 24px #00fff7;position:relative;">
+                <span id="closeReset" style="position:absolute;top:10px;right:18px;cursor:pointer;font-size:1.3rem;color:#00fff7;">&times;</span>
+                <h2 style="color:#00fff7;text-align:center;margin-bottom:18px;">Reset Password</h2>
+                <form id="resetForm">
+                    <label for="resetUsername">Username</label>
+                    <input type="text" id="resetUsername" required autocomplete="off">
+                    <label for="resetPassword">New Password</label>
+                    <input type="password" id="resetPassword" required autocomplete="off">
+                    <button type="submit">Reset</button>
+                    <div id="resetMsg" style="margin-top:10px;text-align:center;"></div>
+                </form>
+            </div>
+        </div>
+</body>
+<script>
+// Responsive AJAX login
+const form = document.getElementById('loginForm');
+const msg = document.getElementById('loginMsg');
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    msg.textContent = 'Logging in...';
+    msg.style.color = '#00fff7';
+    const username = form.username.value;
+    const password = form.password.value;
+    try {
+        const res = await fetch('http://127.0.0.1:5000/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+            msg.textContent = data.message;
+            msg.style.color = '#00ff99';
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
+        } else {
+            msg.textContent = data.message || 'Login failed.';
+            msg.style.color = '#ff3b3b';
+        }
+    } catch (err) {
+        msg.textContent = 'Server error. Please try again.';
+        msg.style.color = '#ff3b3b';
+    }
+});
+
+// Registration Modal Logic
+const registerModal = document.getElementById('registerModal');
+const showRegister = document.getElementById('showRegister');
+const closeRegister = document.getElementById('closeRegister');
+const registerForm = document.getElementById('registerForm');
+const registerMsg = document.getElementById('registerMsg');
+showRegister.onclick = () => { registerModal.style.display = 'flex'; };
+closeRegister.onclick = () => { registerModal.style.display = 'none'; registerMsg.textContent = ''; };
+registerForm.onsubmit = async function(e) {
+    e.preventDefault();
+    registerMsg.textContent = 'Registering...';
+    registerMsg.style.color = '#00fff7';
+    const username = document.getElementById('regUsername').value;
+    const password = document.getElementById('regPassword').value;
+    try {
+        const res = await fetch('http://127.0.0.1:5000/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+            registerMsg.textContent = data.message;
+            registerMsg.style.color = '#00ff99';
+        } else {
+            registerMsg.textContent = data.message || 'Registration failed.';
+            registerMsg.style.color = '#ff3b3b';
+        }
+    } catch (err) {
+        registerMsg.textContent = 'Server error. Please try again.';
+        registerMsg.style.color = '#ff3b3b';
+    }
+};
+
+// Password Reset Modal Logic
+const resetModal = document.getElementById('resetModal');
+const showReset = document.getElementById('showReset');
+const closeReset = document.getElementById('closeReset');
+const resetForm = document.getElementById('resetForm');
+const resetMsg = document.getElementById('resetMsg');
+showReset.onclick = () => { resetModal.style.display = 'flex'; };
+closeReset.onclick = () => { resetModal.style.display = 'none'; resetMsg.textContent = ''; };
+resetForm.onsubmit = async function(e) {
+    e.preventDefault();
+    resetMsg.textContent = 'Resetting password...';
+    resetMsg.style.color = '#00fff7';
+    const username = document.getElementById('resetUsername').value;
+    const new_password = document.getElementById('resetPassword').value;
+    try {
+        const res = await fetch('http://127.0.0.1:5000/reset-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, new_password })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+            resetMsg.textContent = data.message;
+            resetMsg.style.color = '#00ff99';
+        } else {
+            resetMsg.textContent = data.message || 'Reset failed.';
+            resetMsg.style.color = '#ff3b3b';
+        }
+    } catch (err) {
+        resetMsg.textContent = 'Server error. Please try again.';
+        resetMsg.style.color = '#ff3b3b';
+    }
+};
+
+// Close modals on outside click
+window.onclick = function(event) {
+    if (event.target === registerModal) { registerModal.style.display = 'none'; registerMsg.textContent = ''; }
+    if (event.target === resetModal) { resetModal.style.display = 'none'; resetMsg.textContent = ''; }
+};
+</script>
+</body>
+<script>
+// Responsive AJAX login
+const form = document.getElementById('loginForm');
+const msg = document.getElementById('loginMsg');
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    msg.textContent = 'Logging in...';
+    msg.style.color = '#00fff7';
+    const username = form.username.value;
+    const password = form.password.value;
+    try {
+        const res = await fetch('http://127.0.0.1:5000/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+            msg.textContent = data.message;
+            msg.style.color = '#00ff99';
+            // Optionally redirect or show dashboard
+        } else {
+            msg.textContent = data.message || 'Login failed.';
+            msg.style.color = '#ff3b3b';
+        }
+    } catch (err) {
+        msg.textContent = 'Server error. Please try again.';
+        msg.style.color = '#ff3b3b';
+    }
+});
+</script>
+    </div>
+</body>
+</html>
